@@ -1,0 +1,6 @@
+[submodule "freedesktop"]
+	path = freedesktop
+	url = https://github.com/lcpz/awesome-freedesktop
+[submodule "bling"]
+	path = bling
+	url = https://github.com/BlingCorp/bling
