@@ -6,7 +6,7 @@ run() {
     fi
 }
 
-exec >~/.logs/xsession 2>&1
+exec >~/.cache/awesome/autorun.log 2>&1
 
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -29,5 +29,6 @@ run nm-applet
 run picom -b --experimental-backends --dbus
 run mpDris2
 run kdeconnect-indicator
-run kopia-ui
-run steam -minimized
+run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# run kopia-ui
+# run steam -minimized
