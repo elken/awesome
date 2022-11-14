@@ -2,6 +2,7 @@ local wibox = require("wibox")
 local awful = require("awful")
 local theme = require("beautiful")
 local gears = require("gears")
+local globals = require("globals")
 
 local fancy_taglist = require("wibar.tags")
 
@@ -10,13 +11,13 @@ local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t)
 		t:view_only()
 	end),
-	awful.button({ modkey }, 1, function(t)
+	awful.button({ globals.modkey }, 1, function(t)
 		if client.focus then
 			client.focus:move_to_tag(t)
 		end
 	end),
 	awful.button({}, 3, awful.tag.viewtoggle),
-	awful.button({ modkey }, 3, function(t)
+	awful.button({ globals.modkey }, 3, function(t)
 		if client.focus then
 			client.focus:toggle_tag(t)
 		end
@@ -98,6 +99,11 @@ return function(screen)
 				-- Right
 				layout = wibox.layout.fixed.horizontal,
 				{
+					require("wibar.battery"),
+					bg = theme.bg_accent3,
+					widget = wibox.container.background,
+				},
+				{
 					require("wibar.playerctl"),
 					bg = theme.bg_accent3,
 					widget = wibox.container.background,
@@ -112,7 +118,8 @@ return function(screen)
 					widget = wibox.container.background,
 				},
 				{
-					wibox.widget.textclock(string.format('<span color="%s" font="%s"> %s </span>', theme.fg_normal, theme.interface_font .. theme.default_font_size, "%a %d/%m/%y %H:%M")),
+					wibox.widget.textclock(string.format('<span color="%s" font="%s"> %s </span>', theme.fg_normal,
+						theme.interface_font .. theme.default_font_size, "%a %d/%m/%y %H:%M")),
 					bg = theme.bg_accent1,
 					widget = wibox.container.background,
 				},
