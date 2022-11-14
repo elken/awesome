@@ -72,7 +72,7 @@ local global_keys = fun.reduce(
 		)
 	end,
 	gears.table.join(
-		-- Awesome
+	-- Awesome
 		define_key({ "super" }, "F1", hotkeys_popup.show_help, "Show this help", "Awesome"),
 		define_key({ "ctrl", "super" }, "r", awesome.restart, "Restart", "Awesome"),
 		-- Tag Navigation
@@ -93,10 +93,10 @@ local global_keys = fun.reduce(
 			awful.layout.inc(-1)
 		end, "Cycle previous layout", "Tag Layouts"),
 		-- Screen Navigation
-		define_key({ "ctrl", "super" }, "j", function()
+		define_key({ "ctrl", "super" }, "k", function()
 			awful.screen.focus_relative(1)
 		end, "Focus next screen", "Screen Navigation"),
-		define_key({ "ctrl", "super" }, "k", function()
+		define_key({ "ctrl", "super" }, "j", function()
 			awful.screen.focus_relative(-1)
 		end, "Focus previous screen", "Screen Navigation"),
 		-- Applications
