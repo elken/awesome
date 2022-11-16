@@ -87,7 +87,15 @@ playerctl:connect_signal("metadata", function(_, title, artist, album_path, albu
 end)
 
 playerctl:connect_signal("playback_status", function(_, is_playing)
-  play_pause_widget:set_markup_silently(is_playing and pause or play)
+  if is_playing then
+    play_pause_widget:set_markup_silently(pause)
+    song_widget.layout = wibox.container.scroll.horizontal
+    song_widget:continue()
+  else
+    play_pause_widget:set_markup_silently(play)
+    song_widget.layout = wibox.layout.fixed.horizontal
+    song_widget:pause()
+  end
 end)
 
 return wibox.widget({
