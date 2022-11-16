@@ -96,9 +96,9 @@ return {
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = true } },
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
-	{ rule = { class = "Firefox" }, properties = { screen = 1, tag = "2" } },
+	{ rule = { class = "Firefox" }, properties = { screen = 1, tag = screen[1].tags[2].name } },
 
-	{ rule = { class = "Steam" }, properties = { screen = 1, tag = "3" } },
+	{ rule = { class = "Steam" }, properties = { screen = 1, tag = screen[1].tags[3].name } },
 
 	-- Make Emacs fill properly
 	{ rule = { class = "Emacs" }, properties = { size_hints_honor = false } },
