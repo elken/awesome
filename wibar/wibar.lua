@@ -51,10 +51,13 @@ local tasklist_buttons = gears.table.join(
 
 return function(screen)
 	screen.wibox = awful.wibar({
-		position = "top",
-		screen = screen,
-		height = theme.universalsize,
-		bg = theme.transparent,
+		position     = "top",
+		screen       = screen,
+		height       = theme.universalsize,
+		margins      = theme.wibar_margins,
+		bg           = theme.wibar_bg,
+		border_color = theme.wibar_border_color,
+		border_width = theme.wibar_border_width,
 	})
 
 	screen.wibox:setup({
@@ -63,77 +66,33 @@ return function(screen)
 			{
 				-- Left
 				layout = wibox.layout.fixed.horizontal,
-				{
-					awful.widget.layoutbox(screen),
-					bg = theme.bg_accent3,
-					widget = wibox.container.background,
-				},
-				{
-					fancy_taglist.new({
-						screen = screen,
-						taglist_buttons = taglist_buttons,
-						tasklist_buttons = tasklist_buttons,
-					}),
-					bg = theme.bg_accent2,
-					widget = wibox.container.background,
-				},
+				awful.widget.layoutbox(screen),
+				fancy_taglist.new({
+					screen = screen,
+					taglist_buttons = taglist_buttons,
+					tasklist_buttons = tasklist_buttons,
+				}),
 			},
 			{
 				-- Middle
 				layout = wibox.layout.flex.horizontal,
-				{
-					awful.widget.tasklist({
-						screen = screen,
-						filter = awful.widget.tasklist.filter.focused,
-						buttons = tasklist_buttons,
-						style = {
-							font = theme.interface_font .. theme.default_font_size,
-							tasklist_disable_icon = true,
-						},
-					}),
-					bg = theme.bg_accent2,
-					widget = wibox.container.background,
-				},
+				awful.widget.tasklist({
+					screen = screen,
+					filter = awful.widget.tasklist.filter.focused,
+					buttons = tasklist_buttons,
+				}),
 			},
 			{
 				-- Right
 				layout = wibox.layout.fixed.horizontal,
-				{
-					require("wibar.battery"),
-					bg = theme.bg_accent3,
-					widget = wibox.container.background,
-				},
-				{
-					require("wibar.playerctl"),
-					bg = theme.bg_accent3,
-					widget = wibox.container.background,
-				},
-				{
-					wibox.widget.systray(),
-					bottom = theme.universalsize / 6,
-					top = theme.universalsize / 6,
-					left = theme.universalsize * (2 / 3),
-					right = theme.universalsize * (2 / 3),
-					bg = theme.bg_accent1,
-					widget = wibox.container.background,
-				},
-				{
-					wibox.widget.textclock(string.format('<span color="%s" font="%s"> %s </span>', theme.fg_normal,
-						theme.interface_font .. theme.default_font_size, "%a %d/%m/%y %H:%M")),
-					bg = theme.bg_accent1,
-					widget = wibox.container.background,
-				},
-				{
-					require("wibar.power")({
-						font = theme.interface_font .. tostring(theme.universalsize / 2),
-					}),
-					bg = theme.bg_accent3,
-					widget = wibox.container.background,
-				},
+				require("wibar.battery"),
+				require("wibar.playerctl"),
+				wibox.widget.systray(),
+				wibox.widget.textclock(string.format('<span color="%s"> %s </span>', theme.fg_normal, "%a %d/%m/%y %H:%M")),
+				require("wibar.power")(),
 			},
 		},
-		left = theme.useless_gap * 2,
-		right = theme.useless_gap * 2,
+		margins = 2,
 		widget = wibox.container.margin,
 	})
 end

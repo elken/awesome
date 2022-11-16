@@ -1,6 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
-local theme = require("beautiful")
+local dpi = require("beautiful.xresources").apply_dpi
 local wibox = require("wibox")
 local bling = require("bling")
 local playerctl = bling.signal.playerctl.lib({
@@ -13,9 +13,40 @@ local play = " "
 local pause = " "
 local next = ""
 
-local size = theme.universalsize * 1.5
-local font = theme.interface_font .. tostring(theme.universalsize / 2)
-local font_controls = theme.font_name .. tostring(theme.universalsize / 2)
+--- A step function that scrolls the widget to its end and zips to its
+-- beginning. The speed is null at the ends and maximal in the middle. At both
+-- ends the widget stands still for a moment.
+-- @callback scroll_to_end_and_back
+local function scroll_to_end_and_zip_back(elapsed, size, visible_size, speed)
+  local state = ((elapsed * speed) % (2 * size)) / size
+  local negate = false
+  if state > 1 then
+    negate = true
+    state = state - 1
+  end
+  if state < 1 / 5 or state > 4 / 5 then
+    -- One fifth of time, nothing moves
+    state = state < 1 / 5 and 0 or 1
+  else
+    state = (state - 1 / 5) * 5 / 3
+    if state < 1 / 3 then
+      -- In the first 1/3rd of time, do a quadratic increase in speed
+      state = 2 * state * state
+    elseif state < 2 / 3 then
+      -- In the center, do a linear increase. That means we need:
+      -- If state is 1/3, result is 2/9 = 2 * 1/3 * 1/3
+      -- If state is 2/3, result is 7/9 = 1 - 2 * (1 - 2/3) * (1 - 2/3)
+      state = 5 / 3 * state - 3 / 9
+    else
+      -- In the last 1/3rd of time, do a quadratic decrease in speed
+      state = 1 - 2 * (1 - state) * (1 - state)
+    end
+  end
+  if negate then
+    state = 0
+  end
+  return (size - visible_size) * state
+end
 
 local name_widget = wibox.widget({
   markup = "No players",
@@ -25,16 +56,20 @@ local name_widget = wibox.widget({
 })
 
 local song_widget = wibox.widget({
-  markup = "",
-  font = font,
-  align = "center",
-  valign = "center",
-  widget = wibox.widget.textbox,
+  {
+    markup = "",
+    align = "center",
+    valign = "center",
+    widget = wibox.widget.textbox,
+  },
+  speed = 25,
+  max_size = dpi(350),
+  step_function = scroll_to_end_and_zip_back,
+  layout = wibox.container.scroll.horizontal,
 })
 
 local play_pause_widget = wibox.widget({
   markup = "",
-  font = font_controls,
   widget = wibox.widget.textbox,
   buttons = gears.table.join(awful.button({}, 1, nil, function()
     playerctl:play_pause()
@@ -48,18 +83,7 @@ playerctl:connect_signal("metadata", function(_, title, artist, album_path, albu
 
   -- Set player name, title and artist widgets
   name_widget:set_markup_silently(player_name)
-  local song_text = string.format("%s - %s", artist, title)
-
-  if song_text ~= nil then
-    local max_width = size - 5
-    if string.len(song_text) > max_width then
-      song_text = " " .. string.sub(song_text, 0, max_width) .. "... "
-    else
-      song_text = string.format(string.format("%%-%ds", max_width), string.sub(song_text, 1, max_width))
-    end
-
-    song_widget:set_markup_silently(song_text)
-  end
+  song_widget.widget:set_markup_silently(string.format("%s - %s", artist, title))
 end)
 
 playerctl:connect_signal("playback_status", function(_, is_playing)
@@ -72,7 +96,6 @@ return wibox.widget({
       song_widget,
       {
         id = "prev",
-        font = font_controls,
         text = prev,
         widget = wibox.widget.textbox,
         buttons = gears.table.join(awful.button({}, 1, nil, function()
@@ -82,7 +105,6 @@ return wibox.widget({
       play_pause_widget,
       {
         id = "next",
-        font = font_controls,
         text = next,
         widget = wibox.widget.textbox,
         buttons = gears.table.join(awful.button({}, 1, nil, function()
@@ -91,8 +113,8 @@ return wibox.widget({
       },
       layout = wibox.layout.fixed.horizontal,
     },
-    left = theme.universalsize / 2,
-    right = theme.universalsize / 2,
+    left = dpi(6),
+    right = dpi(6),
     widget = wibox.container.margin,
   },
   layout = wibox.layout.fixed.horizontal,

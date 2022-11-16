@@ -136,11 +136,11 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 client.connect_signal("focus", function(c)
-	c.border_color = theme.border_focus
+	c.border_color = theme.border_color_active
 end)
 
 client.connect_signal("unfocus", function(c)
-	c.border_color = theme.border_normal
+	c.border_color = theme.bg_normal
 end)
 
 client.connect_signal("property::size", function(c)
