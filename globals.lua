@@ -23,9 +23,9 @@ return {
 		lock = "i3lock",
 		screenshot = "flameshot gui",
 		media = {
-			toggle = "playerctl -p spotify,mpd play-pause",
-			["next"] = "playerctl -p spotify,mpd next",
-			prev = "playerctl -p spotify,mpd prev",
+			toggle = "playerctl -p mpd,spotify play-pause",
+			["next"] = "playerctl -p mpd,spotify next",
+			prev = "playerctl -p mpd,spotify prev",
 		},
 	},
 	modkey = modkey,
