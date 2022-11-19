@@ -152,10 +152,12 @@ awesome.connect_signal("exit", function(_)
 	for s in screen do
 		local f = assert(io.open("/tmp/awesome-screen-" .. tostring(s.index), "w+"))
 		local t = s.selected_tag
-		if t then
-			f:write(t.name, "\n")
+		if f ~= nil then
+			if t then
+				f:write(t.name, "\n")
+			end
+			f:close()
 		end
-		f:close()
 	end
 end)
 
