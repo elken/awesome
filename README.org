@@ -1,0 +1,17 @@
+#+title: Awesome
+
+[[file:.github/assets/arch.png]]
+My humble etc etc you know the drill here. Super hacky/WIP, don't expect this to work well for you.
+
+* Install
+#+begin_src shell
+cp -R ~/.config/awesome ~/.config/awesome.bak
+git clone --recursive https://github.com/elken/awesome ~/.config/awesome/
+#+end_src
+
+Currently relies on:
+- awesome 4.3 (awesome-git is "WIP", there's some neat stuff there but it full-on breaks some of my custom widgets and I'm lazy)
+- picom: ideally jonaburg's fork but any should work
+- [[https://github.com/elken/.files][my dotfiles]]: should be self-explanatory really
+- [[https://blingcorp.github.io/bling/#/README][bling]] (setup via submodule, be sure to clone accordingly)
+- Anything listed in [[file:globals.lua][globals.lua]]
