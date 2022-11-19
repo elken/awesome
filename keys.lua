@@ -125,7 +125,13 @@ local client_keys = gears.table.join(
 		c.maximized = not c.maximized
 		c.fullscreen = not c.fullscreen
 		c:raise()
-	end, "Toggle fullscreen", "Clients")
+	end, "Toggle fullscreen", "Clients"),
+
+	define_key({ "super", "ctrl" }, "Return", function(c)
+		if c then
+			c:swap(awful.client.getmaster())
+		end
+	end, "Move to master", "Clients")
 )
 
 return {
