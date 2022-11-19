@@ -208,3 +208,18 @@ root.buttons(gears.table.join(awful.button({}, 4, awful.tag.viewnext), awful.but
 
 -- Autorun
 awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+
+-- Handle tags on screens that get removed
+tag.connect_signal("request::screen", function(t)
+	for s in screen do
+		if s ~= t.screen then
+			local t2 = awful.tag.find_by_name(s, t.name)
+			if t2 then
+				t:swap(t2)
+			else
+				t.screen = s
+			end
+			return
+		end
+	end
+end)
