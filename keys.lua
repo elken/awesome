@@ -72,7 +72,7 @@ local global_keys = fun.reduce(
 		)
 	end,
 	gears.table.join(
-	-- Awesome
+		-- Awesome
 		define_key({ "super" }, "F1", hotkeys_popup.show_help, "Show this help", "Awesome"),
 		define_key({ "ctrl", "super" }, "r", awesome.restart, "Restart", "Awesome"),
 		-- Tag Navigation

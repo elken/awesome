@@ -92,16 +92,12 @@ return {
 		properties = { floating = true },
 	},
 
-	-- Add titlebars to normal clients and dialogs
-	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = true } },
+	-- Custom rules
+	{ rule = { class = "Firefox" }, properties = { tag = screen[1].tags[2].name } },
 
-	-- Set Firefox to always map on the tag named "2" on screen 1.
-	{ rule = { class = "Firefox" }, properties = { screen = 1, tag = screen[1].tags[2].name } },
+	{ rule = { class = "Spotify" }, properties = { tag = screen[1].tags[3].name } },
 
-	{ rule = { class = "Steam" }, properties = { screen = 1, tag = screen[1].tags[3].name } },
-
-	-- Make Emacs fill properly
-	{ rule = { class = "Emacs" }, properties = { size_hints_honor = false } },
+	{ rule = { class = "Slack" }, properties = { tag = screen[1].tags[4].name } },
 
 	-- Fullscreen games
 	{

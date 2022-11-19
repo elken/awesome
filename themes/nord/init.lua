@@ -7,22 +7,22 @@ local default_font_size = dpi(11)
 
 local theme = {}
 local nord = {
-  "#2e3440", -- 1
-  "#3b4252", -- 2
-  "#434c5e", -- 3
-  "#4c566a", -- 4
-  "#d8dee9", -- 5
-  "#e5e9f0", -- 6
-  "#eceff4", -- 7
-  "#8fbcbb", -- 8
-  "#88c0d0", -- 9
-  "#81a1c1", -- 10
-  "#5e81ac", -- 11
-  "#bf616a", -- 12
-  "#d08770", -- 13
-  "#ebcb8b", -- 14
-  "#a3be8c", -- 15
-  "#b48ead", -- 16
+	"#2e3440", -- 1
+	"#3b4252", -- 2
+	"#434c5e", -- 3
+	"#4c566a", -- 4
+	"#d8dee9", -- 5
+	"#e5e9f0", -- 6
+	"#eceff4", -- 7
+	"#8fbcbb", -- 8
+	"#88c0d0", -- 9
+	"#81a1c1", -- 10
+	"#5e81ac", -- 11
+	"#bf616a", -- 12
+	"#d08770", -- 13
+	"#ebcb8b", -- 14
+	"#a3be8c", -- 15
+	"#b48ead", -- 16
 }
 
 -- Default variables
@@ -67,26 +67,26 @@ theme.icon_theme = "ePapirus-Dark"
 
 -- layout
 local layouts = {
-  "cornernw",
-  "cornerne",
-  "cornersw",
-  "cornerse",
-  "fairh",
-  "fairv",
-  "floating",
-  "magnifier",
-  "max",
-  "fullscreen",
-  "spiral",
-  "dwindle",
-  "tile",
-  "tiletop",
-  "tilebottom",
-  "tileleft",
+	"cornernw",
+	"cornerne",
+	"cornersw",
+	"cornerse",
+	"fairh",
+	"fairv",
+	"floating",
+	"magnifier",
+	"max",
+	"fullscreen",
+	"spiral",
+	"dwindle",
+	"tile",
+	"tiletop",
+	"tilebottom",
+	"tileleft",
 }
 
 for _, name in ipairs(layouts) do
-  theme["layout_" .. name] = globals.theme.dir .. "/icons/" .. name .. ".png"
+	theme["layout_" .. name] = globals.theme.dir .. "/icons/" .. name .. ".png"
 end
 
 -- maximized

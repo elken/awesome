@@ -51,11 +51,11 @@ local tasklist_buttons = gears.table.join(
 
 return function(screen)
 	screen.wibox = awful.wibar({
-		position     = "top",
-		screen       = screen,
-		height       = theme.universalsize,
-		margins      = theme.wibar_margins,
-		bg           = theme.wibar_bg,
+		position = "top",
+		screen = screen,
+		height = theme.universalsize,
+		margins = theme.wibar_margins,
+		bg = theme.wibar_bg,
 		border_color = theme.wibar_border_color,
 		border_width = theme.wibar_border_width,
 	})
@@ -88,7 +88,9 @@ return function(screen)
 				require("wibar.battery"),
 				require("wibar.playerctl"),
 				wibox.widget.systray(),
-				wibox.widget.textclock(string.format('<span color="%s"> %s </span>', theme.fg_normal, "%a %d/%m/%y %H:%M")),
+				wibox.widget.textclock(
+					string.format('<span color="%s"> %s </span>', theme.fg_normal, "%a %d/%m/%y %H:%M")
+				),
 				require("wibar.power")(),
 			},
 		},

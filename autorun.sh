@@ -30,5 +30,6 @@ run picom -b --experimental-backends --dbus
 run mpDris2
 run kdeconnect-indicator
 run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+run firefox
 # run kopia-ui
 # run steam -minimized
