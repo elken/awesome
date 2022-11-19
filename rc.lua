@@ -95,14 +95,16 @@ awful.screen.connect_for_each_screen(function(s)
 	-- If there's a saved tag in tmp, load it for this screen
 	local f = io.open("/tmp/awesome-screen-" .. tostring(s.index), "r")
 	if f ~= nil then
-		local tag_name = f:read("*line")
+		local tag_idx = tonumber(f:read("*line"))
 		f:close()
-		local t = awful.tag.find_by_name(s, tag_name)
+		local t = s.tags[tag_idx]
 		if t then
 			t:view_only()
+		else
+			s.tags[1]:view_only()
 		end
 	else
-		awful.tag.find_by_name(s, " 1 "):view_only()
+		s.tags[1]:view_only()
 	end
 end)
 
@@ -154,10 +156,16 @@ awesome.connect_signal("exit", function(_)
 		local t = s.selected_tag
 		if f ~= nil then
 			if t then
-				f:write(t.name, "\n")
+				f:write(t.index, "\n")
 			end
 			f:close()
 		end
+	end
+
+	local f = assert(io.open("/tmp/awesome-focused", "w+"))
+	if f ~= nil then
+		f:write(awful.screen.focused().index, "\n")
+		f:close()
 	end
 end)
 

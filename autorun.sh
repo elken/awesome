@@ -33,3 +33,8 @@ run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 run firefox
 # run kopia-ui
 # run steam -minimized
+
+# Ensure the correct screen is loaded when restarting
+if test -f /tmp/awesome-focused; then
+    printf 'require("awful").screen.focus(%d)' $(cat /tmp/awesome-focused | head -n 1) | awesome-client
+fi
