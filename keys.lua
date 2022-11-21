@@ -104,6 +104,7 @@ local global_keys = fun.reduce(
 		define_cmd({ "super" }, "b", globals.tools.browser),
 		define_cmd({ "super" }, "r", globals.tools.launcher, "Spawn Rofi"),
 		define_cmd({ "super" }, "e", globals.tools.editor, "Spawn Emacs"),
+		define_cmd({ "super" }, "l", globals.tools.suspend, "Lock screen"),
 		define_cmd({}, "Print", globals.tools.screenshot, "Take Screenshot", "Awesome"),
 		define_cmd({}, "XF86AudioPlay", globals.tools.media.toggle, "Play/pause media item", "Media"),
 		define_cmd({}, "XF86AudioNext", globals.tools.media.next, "Next media item", "Media"),

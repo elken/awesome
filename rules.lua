@@ -93,11 +93,9 @@ return {
 	},
 
 	-- Custom rules
-	{ rule = { class = "Firefox" }, properties = { tag = screen[1].tags[2].name } },
+	{ rule = { class = "Firefox" }, properties = { tag = screen[2].tags[2].name } },
 
-	{ rule = { class = "Spotify" }, properties = { tag = screen[1].tags[3].name } },
-
-	{ rule = { class = "Slack" }, properties = { tag = screen[1].tags[4].name } },
+	{ rule = { class = "Slack" }, properties = { tag = screen[1].tags[1].name } },
 
 	-- Fullscreen games
 	{

@@ -4,7 +4,7 @@ local theme_name = "nord"
 local modkey = "Mod4"
 local theme_dir = string.format("%s%s/%s", awful.util.getdir("config"), "themes", theme_name)
 local terminal = "alacritty"
-local editor = os.getenv("VISUAL") or "emacs"
+local editor = "emacs"
 local editor_cmd = terminal .. " -e " .. (os.getenv("EDITOR") or "emacs")
 
 return {
@@ -20,12 +20,15 @@ return {
 		file_manager = "nautilus",
 		editor = editor,
 		editor_cmd = editor_cmd,
-		lock = "i3lock",
+		lock = "/home/elken/bin/lock",
+		suspend = "systemctl suspend",
+		reboot = "reboot",
+		poweroff = "shutdown now",
 		screenshot = "flameshot gui",
 		media = {
-			toggle = "playerctl -p mpd,spotify play-pause",
-			["next"] = "playerctl -p mpd,spotify next",
-			prev = "playerctl -p mpd,spotify prev",
+			toggle = "playerctl -p mpd play-pause",
+			["next"] = "playerctl -p mpd next",
+			prev = "playerctl -p mpd previous",
 		},
 	},
 	modkey = modkey,

@@ -58,13 +58,13 @@ local function worker(user_args)
 		awful.spawn.with_shell(globals.tools.lock)
 	end
 	local onreboot = args.onreboot or function()
-		awful.spawn.with_shell("reboot")
+		awful.spawn.with_shell(globals.tools.reboot)
 	end
 	local onsuspend = args.onsuspend or function()
-		awful.spawn.with_shell("systemctl suspend")
+		awful.spawn.with_shell(globals.tools.suspend)
 	end
 	local onpoweroff = args.onpoweroff or function()
-		awful.spawn.with_shell("shutdown now")
+		awful.spawn.with_shell(globals.tools.poweroff)
 	end
 
 	local menu_items = {

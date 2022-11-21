@@ -5,7 +5,7 @@ local wibox = require("wibox")
 local bling = require("bling")
 local playerctl = bling.signal.playerctl.lib({
 	ignore = "firefox",
-	player = { "mpd", "spotify", "%any" },
+	player = { "mpd", "%any" },
 })
 
 local prev = ""
