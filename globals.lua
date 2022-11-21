@@ -26,9 +26,9 @@ return {
 		poweroff = "shutdown now",
 		screenshot = "flameshot gui",
 		media = {
-			toggle = "playerctl -p mpd play-pause",
-			["next"] = "playerctl -p mpd next",
-			prev = "playerctl -p mpd previous",
+			toggle = "playerctl -p spotify,mpd play-pause",
+			["next"] = "playerctl -p spotify,mpd next",
+			prev = "playerctl -p spotify,mpd previous",
 		},
 	},
 	modkey = modkey,

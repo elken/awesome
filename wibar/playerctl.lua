@@ -4,8 +4,8 @@ local dpi = require("beautiful.xresources").apply_dpi
 local wibox = require("wibox")
 local bling = require("bling")
 local playerctl = bling.signal.playerctl.lib({
-	ignore = "firefox",
-	player = { "mpd", "%any" },
+	ignore = { "firefox", "plasma-browser-integration" },
+	player = { "mpd", "spotify", "%any" },
 })
 
 local prev = ""
