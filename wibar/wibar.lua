@@ -49,10 +49,10 @@ local tasklist_buttons = gears.table.join(
 	end)
 )
 
-return function(screen)
-	screen.wibox = awful.wibar({
+return function(s)
+	s.wibox = awful.wibar({
 		position = "top",
-		screen = screen,
+		screen = s,
 		height = theme.universalsize,
 		margins = theme.wibar_margins,
 		bg = theme.wibar_bg,
@@ -60,24 +60,28 @@ return function(screen)
 		border_width = theme.wibar_border_width,
 	})
 
-	screen.wibox:setup({
+	s.wibox:setup({
 		{
 			layout = wibox.layout.align.horizontal,
 			{
 				-- Left
 				layout = wibox.layout.fixed.horizontal,
-				awful.widget.layoutbox(screen),
-				fancy_taglist.new({
-					screen = screen,
-					taglist_buttons = taglist_buttons,
-					tasklist_buttons = tasklist_buttons,
+				awful.widget.layoutbox(s),
+				awful.widget.taglist({
+					screen = s,
+					filter = awful.widget.taglist.filter.all,
 				}),
+				-- fancy_taglist.new({
+				-- 	screen = s,
+				-- 	taglist_buttons = taglist_buttons,
+				-- 	tasklist_buttons = tasklist_buttons,
+				-- }),
 			},
 			{
 				-- Middle
 				layout = wibox.layout.flex.horizontal,
 				awful.widget.tasklist({
-					screen = screen,
+					screen = s,
 					filter = awful.widget.tasklist.filter.focused,
 					buttons = tasklist_buttons,
 				}),

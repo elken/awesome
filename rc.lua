@@ -83,7 +83,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 	--- Creates starting tags on each screen
 	for idx = 1, 9 do
-		awful.tag.add(string.format(" %d ", idx), {
+		awful.tag.add(idx, {
 			screen = s,
 			layout = awful.layout.layouts[1],
 		})
