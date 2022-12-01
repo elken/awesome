@@ -39,6 +39,14 @@ local client_buttons = gears.table.join(
 	end, "Resize client", "Clients")
 )
 
+local function screen_tag(screen_idx, tag_idx)
+	if screen:count() == 1 then
+		screen_idx = 1
+	end
+
+	return { screen = screen_idx, tag = screen[screen_idx].tags[tag_idx].name }
+end
+
 return {
 	-- All clients will match this rule.
 	{
@@ -93,9 +101,11 @@ return {
 	},
 
 	-- Custom rules
-	{ rule = { class = "Firefox" }, properties = { tag = screen[2].tags[2].name } },
+	{ rule = { class = "Firefox" }, properties = screen_tag(2, 2) },
 
-	{ rule = { class = "Slack" }, properties = { tag = screen[1].tags[1].name } },
+	{ rule = { class = "Slack" }, properties = screen_tag(3, 3) },
+	{ rule = { class = "thunderbird" }, properties = screen_tag(2, 3) },
+	{ rule = { class = "Spotify" }, properties = screen_tag(1, 3) },
 
 	-- Fullscreen games
 	{
