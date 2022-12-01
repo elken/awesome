@@ -82,6 +82,7 @@ awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
 
 	--- Creates starting tags on each screen
+	--- TODO Different layouts for specific screens
 	for idx = 1, 9 do
 		awful.tag.add(idx, {
 			screen = s,
@@ -207,7 +208,14 @@ awful.rules.rules = require("rules")
 root.buttons(gears.table.join(awful.button({}, 4, awful.tag.viewnext), awful.button({}, 5, awful.tag.viewprev)))
 
 -- Autorun
-awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+local xresources_name = "awesome.started"
+local xresources = awful.util.pread("xrdb -query")
+if not xresources:match(xresources_name) then
+	awful.util.spawn_with_shell("xrdb -merge <<< " .. "'" .. xresources_name .. ":true'")
+	-- Execute once for X server
+	os.execute("dex --environment Awesome --autostart --search-paths $XDG_CONFIG_HOME/autostart")
+	awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+end
 
 -- Handle tags on screens that get removed
 tag.connect_signal("request::screen", function(t)

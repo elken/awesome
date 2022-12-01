@@ -24,15 +24,10 @@ xsetroot -cursor_name left_ptr
 xset fp rehash
 xss-lock --transfer-sleep-lock -- /home/elken/bin/lock
 
-run mpd
 run nm-applet
 run picom -b --experimental-backends --dbus
-run mpDris2
 run kdeconnect-indicator
 run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-run firefox
-# run kopia-ui
-# run steam -minimized
 
 # Ensure the correct screen is loaded when restarting
 if test -f /tmp/awesome-focused; then
