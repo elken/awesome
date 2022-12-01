@@ -34,6 +34,7 @@ local battery_bar = wibox.widget({
 
 local battery_text = wibox.widget({
 	text = " N/A",
+	color = theme.nord[5],
 	widget = wibox.widget.textbox,
 })
 
@@ -55,14 +56,14 @@ awful.widget.watch("cat /sys/class/power_supply/BAT0/uevent", 5, function(_, std
 	local seconds_left = (battery.POWER_SUPPLY_CHARGE_NOW / battery.POWER_SUPPLY_CURRENT_NOW) * 3600
 	local time_left = os.date("*t", math.floor(seconds_left))
 
-	local color = "#008800"
+	local color = theme.nord[15]
 
-	if capacity == 100 then
-		color = "#008800"
-	elseif capacity < 80 then
-		color = "#AB7300"
+	if capacity < 50 then
+		color = theme.nord[14]
+	elseif capacity < 15 then
+		color = theme.nord[12]
 	else
-		color = "#880000"
+		color = theme.nord[15]
 	end
 
 	battery_bar.color = color
@@ -74,7 +75,9 @@ awful.widget.watch("cat /sys/class/power_supply/BAT0/uevent", 5, function(_, std
 	elseif battery.POWER_SUPPLY_STATUS == "Full" then
 		battery_widget.visible = false
 	else
-		battery_text:set_text(string.format(" %02d:%02d:%02d", time_left.hour, time_left.min, time_left.sec))
+		battery_text:set_text(
+			string.format(" %02d:%02d:%02d (%d%%) ", time_left.hour, time_left.min, time_left.sec, capacity)
+		)
 	end
 end)
 

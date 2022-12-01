@@ -26,6 +26,7 @@ local nord = {
 }
 
 -- Default variables
+theme.nord = nord
 theme.useless_gap = dpi(4)
 theme.font = font_name .. default_font_size
 theme.font_name = font_name
