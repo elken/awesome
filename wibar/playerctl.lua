@@ -57,7 +57,7 @@ local name_widget = wibox.widget({
 
 local song_widget = wibox.widget({
 	{
-		markup = "",
+		markup = " - ",
 		align = "center",
 		valign = "center",
 		widget = wibox.widget.textbox,
@@ -69,7 +69,7 @@ local song_widget = wibox.widget({
 })
 
 local play_pause_widget = wibox.widget({
-	markup = "",
+	markup = pause,
 	widget = wibox.widget.textbox,
 	buttons = gears.table.join(awful.button({}, 1, nil, function()
 		playerctl:play_pause()
