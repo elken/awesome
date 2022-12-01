@@ -1,14 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "Lua": {
-        "runtime.version": "LuaJIT",
-        "workspace": {
-            "library": [
-                "/usr/share/awesome/lib",
-                "/usr/share/lua/5.4",
-            ],
-            "checkThirdParty": false,
-        },
         "diagnostics": {
             "globals": [
                 "awesome",
@@ -16,8 +8,17 @@
                 "tag",
                 "screen",
                 "mouse",
-                "root",
+                "root"
+            ]
+        },
+        "runtime.version": "LuaJIT",
+        "workspace": {
+            "checkThirdParty": true,
+            "library": [
+                "/usr/share/awesome/lib",
+                "/usr/share/lua/5.4"
             ]
         }
-    }
+    },
+    "Lua.workspace.checkThirdParty": false
 }
