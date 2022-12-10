@@ -28,6 +28,7 @@ local battery_bar = wibox.widget({
 	value = 0.5,
 	forced_width = 100,
 	paddings = 1,
+	background_color = theme.nord[2],
 	shape = gears.shape.rounded_bar,
 	widget = wibox.widget.progressbar,
 })
@@ -70,15 +71,16 @@ awful.widget.watch("cat /sys/class/power_supply/BAT0/uevent", 5, function(_, std
 	battery_bar.background_color = color
 
 	battery_bar:set_value(capacity / 100)
+	local battery_header = ""
 	if battery.POWER_SUPPLY_STATUS == "Charging" then
-		battery_text:set_text(" ")
+		battery_header = " "
 	elseif battery.POWER_SUPPLY_STATUS == "Full" then
 		battery_widget.visible = false
 	else
-		battery_text:set_text(
-			string.format(" %02d:%02d:%02d (%d%%) ", time_left.hour, time_left.min, time_left.sec, capacity)
-		)
+		battery_header = string.format("%02d:%02d:%02d", time_left.hour, time_left.min, time_left.sec)
 	end
+
+	battery_text:set_text(string.format(" %s (%s%%) ", battery_header, capacity))
 end)
 
 return battery_widget
