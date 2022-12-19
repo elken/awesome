@@ -6,7 +6,7 @@ local font_name = "Iosevka Nerd Font "
 local default_font_size = dpi(11)
 
 local theme = {}
-local nord = {
+local colors = {
 	"#2e3440", -- 1
 	"#3b4252", -- 2
 	"#434c5e", -- 3
@@ -26,24 +26,24 @@ local nord = {
 }
 
 -- Default variables
-theme.nord = nord
+theme.colors = colors
 theme.useless_gap = dpi(4)
 theme.font = font_name .. default_font_size
 theme.font_name = font_name
 theme.default_font_size = default_font_size
-theme.bg_normal = nord[2]
-theme.bg_focus = nord[3]
-theme.bg_urgent = nord[12]
-theme.bg_minimize = nord[1]
-theme.fg_normal = nord[7]
-theme.fg_focus = nord[6]
-theme.fg_urgent = nord[5]
-theme.fg_minimize = nord[4]
+theme.bg_normal = colors[2]
+theme.bg_focus = colors[3]
+theme.bg_urgent = colors[12]
+theme.bg_minimize = colors[1]
+theme.fg_normal = colors[7]
+theme.fg_focus = colors[6]
+theme.fg_urgent = colors[5]
+theme.fg_minimize = colors[4]
 theme.wallpaper = globals.theme.dir .. "/wallpaper.png"
 theme.bg_systray = theme.bg_normal
-theme.border_color_active = nord[11]
-theme.border_color_normal = nord[2]
-theme.border_color_urgent = nord[12]
+theme.border_color_active = colors[11]
+theme.border_color_normal = colors[2]
+theme.border_color_urgent = colors[12]
 theme.border_width = dpi(1)
 theme.transparent = "#00000000"
 
@@ -57,11 +57,11 @@ theme.fullscreen_hide_border = true
 theme.gap_single_client = true
 
 -- hotkeys
-theme.hotkeys_bg = nord[1]
-theme.hotkeys_fg = nord[7]
+theme.hotkeys_bg = colors[1]
+theme.hotkeys_fg = colors[7]
 theme.hotkeys_shape = gears.shape.rounded_rect
-theme.hotkeys_label_fg = nord[2]
-theme.hotkeys_modifiers_fg = nord[6]
+theme.hotkeys_label_fg = colors[2]
+theme.hotkeys_modifiers_fg = colors[6]
 
 -- icon
 theme.icon_theme = "ePapirus-Dark"
@@ -146,11 +146,11 @@ theme.maximized_hide_border = true
 theme.systray_icon_spacing = dpi(1)
 
 -- taglist
-theme.taglist_bg_focus = nord[10]
+theme.taglist_bg_focus = colors[10]
 
 -- tasklist
-theme.tasklist_bg_focus = nord[3]
-theme.tasklist_bg_normal = nord[1]
+theme.tasklist_bg_focus = colors[3]
+theme.tasklist_bg_normal = colors[1]
 theme.tasklist_disable_icon = true
 
 -- wibar

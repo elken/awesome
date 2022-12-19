@@ -9,7 +9,7 @@ local editor_cmd = terminal .. " -e " .. (os.getenv("EDITOR") or "emacs")
 
 return {
 	theme = {
-		name = "nord",
+		name = theme_name,
 		dir = theme_dir,
 		path = string.format("%s/init.lua", theme_dir),
 	},
