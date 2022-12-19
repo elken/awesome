@@ -84,6 +84,7 @@ return function(s)
 					screen = s,
 					filter = awful.widget.tasklist.filter.focused,
 					buttons = tasklist_buttons,
+					style = theme,
 				}),
 			},
 			{

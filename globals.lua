@@ -1,6 +1,6 @@
 local awful = require("awful")
 
-local theme_name = "nord"
+local theme_name = "catpuccin"
 local modkey = "Mod4"
 local theme_dir = string.format("%s%s/%s", awful.util.getdir("config"), "themes", theme_name)
 local terminal = "alacritty"
