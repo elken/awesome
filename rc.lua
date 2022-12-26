@@ -6,6 +6,8 @@ local gears = require("gears")
 local awful = require("awful")
 local theme = require("beautiful")
 local naughty = require("naughty")
+local wibox = require("wibox")
+local ruled = require("ruled")
 local globals = require("globals")
 
 require("awful.hotkeys_popup.keys")
@@ -13,31 +15,19 @@ require("awful.autofocus")
 require("awful.remote")
 
 -- Handle startup errors
+naughty.connect_signal("request::display_error", function(message, startup)
+	naughty.notification({
+		urgency = "critical",
+		title = "Oops, an error happened" .. (startup and " during startup!" or "!"),
+		message = message,
+	})
+end)
 if awesome.startup_errors then
 	naughty.notify({
 		preset = naughty.config.presets.critical,
 		title = "Startup errors found",
 		text = awesome.startup_errors,
 	})
-end
-
--- Handle runtime errors after startup
-do
-	local in_error = false
-	awesome.connect_signal("debug::error", function(err)
-		-- Make sure we don't go into an endless error loop
-		if in_error then
-			return
-		end
-		in_error = true
-
-		naughty.notify({
-			preset = naughty.config.presets.critical,
-			title = "Oops, an error happened!",
-			text = tostring(err),
-		})
-		in_error = false
-	end)
 end
 
 -- Attempt to load the theme
@@ -56,41 +46,41 @@ end
 
 -- Wallpaper
 local function set_wallpaper(s)
-	-- Wallpaper
 	if theme.wallpaper then
-		local wallpaper = theme.wallpaper
-		-- If wallpaper is a function, call it with the screen
-		if type(wallpaper) == "function" then
-			wallpaper = wallpaper(s)
-		end
-		gears.wallpaper.maximized(wallpaper, s, true)
+		awful.wallpaper({
+			screen = s,
+			widget = {
+				{
+					image = theme.wallpaper,
+					upscale = true,
+					downscale = true,
+					widget = wibox.widget.imagebox,
+				},
+				valign = "center",
+				halign = "center",
+				tiled = false,
+				widget = wibox.container.tile,
+			},
+		})
 	end
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal("request::wallpaper", set_wallpaper)
 screen.connect_signal("property::geometry", set_wallpaper)
 
 -- Load the list of layouts
-awful.layout.layouts = globals.layouts
+tag.connect_signal("request::default_layouts", function()
+	awful.layout.append_default_layouts(globals.layouts)
+end)
 
 -- Use our preferred terminal emulator where possible
 require("menubar").utils.terminal = globals.tools.term
 
 -- Screen setup
-awful.screen.connect_for_each_screen(function(s)
-	-- Wallpaper
-	set_wallpaper(s)
-
-	--- Creates starting tags on each screen
-	--- TODO Different layouts for specific screens
-	for idx = 1, 9 do
-		awful.tag.add(idx, {
-			screen = s,
-			layout = awful.layout.layouts[1],
-		})
-	end
-
+screen.connect_signal("request::desktop_decoration", function(s)
 	-- Each screen has its own tag table.
+	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 	require("wibar.wibar")(s)
 
 	-- If there's a saved tag in tmp, load it for this screen
@@ -140,17 +130,17 @@ client.connect_signal("mouse::enter", function(c)
 	end
 end)
 
-client.connect_signal("focus", function(c)
-	c.border_color = theme.border_color_active
-end)
+-- client.connect_signal("focus", function(c)
+-- 	c.border_color = theme.border_color_active
+-- end)
 
-client.connect_signal("unfocus", function(c)
-	c.border_color = theme.bg_normal
-end)
+-- client.connect_signal("unfocus", function(c)
+-- 	c.border_color = theme.bg_normal
+-- end)
 
-client.connect_signal("property::size", function(c)
-	c.border_width = theme.border_width
-end)
+-- client.connect_signal("property::size", function(c)
+-- 	c.border_width = theme.border_width
+-- end)
 
 awesome.connect_signal("exit", function(_)
 	-- Persist last tags through exit/restart
@@ -199,13 +189,20 @@ for s in screen do
 	end)
 end
 
--- Setup global keybindings
-root.keys(require("keys").global_keys)
+-- Setup keybindings
+require("keys")
 
 -- Load client rules
-awful.rules.rules = require("rules")
+ruled.client.connect_signal("request::rules", require("rules")())
 
-root.buttons(gears.table.join(awful.button({}, 4, awful.tag.viewnext), awful.button({}, 5, awful.tag.viewprev)))
+awful.mouse.append_global_mousebindings({
+	awful.button({}, 4, awful.tag.viewprev),
+	awful.button({}, 5, awful.tag.viewnext),
+})
+
+naughty.connect_signal("request::display", function(n)
+	naughty.layout.box({ notification = n })
+end)
 
 -- Autorun
 local xresources_name = "awesome.started"

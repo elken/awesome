@@ -58,48 +58,47 @@ return function(s)
 		bg = theme.wibar_bg,
 		border_color = theme.wibar_border_color,
 		border_width = theme.wibar_border_width,
-	})
-
-	s.wibox:setup({
-		{
-			layout = wibox.layout.align.horizontal,
+		widget = {
 			{
-				-- Left
-				layout = wibox.layout.fixed.horizontal,
-				awful.widget.layoutbox(s),
-				awful.widget.taglist({
-					screen = s,
-					filter = awful.widget.taglist.filter.all,
-				}),
-				-- fancy_taglist.new({
-				-- 	screen = s,
-				-- 	taglist_buttons = taglist_buttons,
-				-- 	tasklist_buttons = tasklist_buttons,
-				-- }),
+				layout = wibox.layout.align.horizontal,
+				{
+					-- Left
+					layout = wibox.layout.fixed.horizontal,
+					awful.widget.layoutbox(s),
+					awful.widget.taglist({
+						screen = s,
+						filter = awful.widget.taglist.filter.all,
+						style = theme,
+					}),
+					-- fancy_taglist.new({
+					-- 	screen = s,
+					-- 	taglist_buttons = taglist_buttons,
+					-- 	tasklist_buttons = tasklist_buttons,
+					-- }),
+				},
+				{
+					-- Middle
+					layout = wibox.layout.flex.horizontal,
+					awful.widget.tasklist({
+						screen = s,
+						filter = awful.widget.tasklist.filter.focused,
+						buttons = tasklist_buttons,
+					}),
+				},
+				{
+					-- Right
+					layout = wibox.layout.fixed.horizontal,
+					-- require("wibar.battery"),
+					require("wibar.playerctl"),
+					wibox.widget.systray(),
+					wibox.widget.textclock(
+						string.format('<span color="%s"> %s </span>', theme.fg_normal, "%a %d/%m/%y %H:%M")
+					),
+					require("wibar.power")(),
+				},
 			},
-			{
-				-- Middle
-				layout = wibox.layout.flex.horizontal,
-				awful.widget.tasklist({
-					screen = s,
-					filter = awful.widget.tasklist.filter.focused,
-					buttons = tasklist_buttons,
-					style = theme,
-				}),
-			},
-			{
-				-- Right
-				layout = wibox.layout.fixed.horizontal,
-				require("wibar.battery"),
-				require("wibar.playerctl"),
-				wibox.widget.systray(),
-				wibox.widget.textclock(
-					string.format('<span color="%s"> %s </span>', theme.fg_normal, "%a %d/%m/%y %H:%M")
-				),
-				require("wibar.power")(),
-			},
+			margins = 2,
+			widget = wibox.container.margin,
 		},
-		margins = 2,
-		widget = wibox.container.margin,
 	})
 end
